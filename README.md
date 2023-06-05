@@ -1,1 +1,1 @@
-# BigInt-2n-1
+# BigInt 3x + 1
