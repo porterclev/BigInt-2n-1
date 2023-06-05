@@ -1,8 +1,17 @@
+// Porter Clevidence
+// Class (CECS 325-01)
+// Project Name (Prog 7 - 3N + 1(BigInt))
+// Due Date (4/25/2023)
+//
+// I certify that this program is my own original work. I did not copy any part of this program from
+// any other source. I further certify that I typed each and every line of code in this program.
+
 #include <string>
 #include <vector>
 #include <iostream>
 #include <limits.h>
 #include <cstring>
+#include <fstream>
 using namespace std;
 
 class BigInt
@@ -449,20 +458,56 @@ void findThreeNp1(BigInt n, ThreeNp1 &Np1, bool printSteps)
     }
 }
 // https://en.wikipedia.org/wiki/Collatz_conjecture
-int main()
+int main(int argc, char const *argv[])
 {
     BigInt MAX(INT_MAX);
-
     cout << "The largest integer is " << MAX << endl;
     cout << "Twice the largest integer is " << MAX + MAX << endl;
-    BigInt start(INT_MAX); // BigInt constructor - use for submission
-    // BigInt start(12); // BigInt constructor – use for testing
-    bool printSteps = false;
-    ThreeNp1 N = {start, 0, 0, 0, 0};   // initialize N
-    findThreeNp1(start, N, printSteps); // print out the steps
-    cout << endl;
-    print(N);
-    BigInt x = BigInt(3);
+    bool printSteps = true;
+
+    BigInt start = BigInt(INT_MAX);
+    int input = 0;
+    int args[argc - 1];
+    /*
+        Arg Handling
+        up to 5 args (not including name)
+    */
+    if (argc < 2)
+    {
+        cout << "Enter a 3n+1 candidate number: ";
+        cin >> input;
+        start = BigInt(input);
+    }
+    else
+    {
+        for (int i = 0; i < argc - 1; i++)
+        {
+            args[i] = atoi(argv[i + 1]);
+        }
+    }
+    ThreeNp1 N = {start, 0, 0, 0, 0}; // initialize N
+    /*
+        Algorithm
+    */
+    if (input != 0)
+    {
+        findThreeNp1(start, N, printSteps); // print out the steps
+        cout << endl;
+        print(N);
+    }
+    else
+    {
+        for (int i = 0; i < argc - 1; i++)
+        {
+            cout << "\nSolving 3n+1 - starting value: " << args[i] << endl;
+
+            findThreeNp1(start, N, printSteps); // print out the steps
+            cout << endl;
+            print(N);
+        }
+    }
+
+    // BigInt start(100); // BigInt constructor – use for testing
 
     return 0;
 }
